@@ -17,7 +17,6 @@ epsilon_decay = 0.995
 min_epsilon = 0.01
 
 scores = []
-epsilons = []
 
 for episode in range(episodes):
     env.reset()
@@ -60,7 +59,6 @@ for episode in range(episodes):
     if (episode + 1) % 100 == 0:
         print(f"episodio {episode + 1}, punteggio: {env.score}, epsilon: {epsilon:.3f}")
     scores.append(env.score)
-    epsilons.append(epsilon)
 
 total_reward += reward
 
