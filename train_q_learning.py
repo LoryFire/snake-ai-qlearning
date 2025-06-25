@@ -79,15 +79,6 @@ plt.ylabel('Punteggio')
 plt.title('Punteggio durante l\'allenamento')
 plt.legend()
 
-# Grafico epsilon
-plt.subplot(1, 2, 2)
-plt.plot(epsilons, label='Epsilon', color='orange')
-plt.xlabel('Episodio')
-plt.ylabel('Epsilon')
-plt.title('Valore di epsilon nel tempo')
-plt.legend()
-plt.tight_layout()
-plt.show()
 
 
 
