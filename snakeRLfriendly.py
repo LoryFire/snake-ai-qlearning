@@ -168,10 +168,10 @@ class SnakeEnv:
 
 def get_state(self):
     head = self.snake[0]
-    point_l = [head[0] - self.block_size, head[1]]
-    point_r = [head[0] + self.block_size, head[1]]
-    point_u = [head[0], head[1] - self.block_size]
-    point_d = [head[0], head[1] + self.block_size]
+    point_l = [head[0] - self.block, head[1]]
+    point_r = [head[0] + self.block, head[1]]
+    point_u = [head[0], head[1] - self.block]
+    point_d = [head[0], head[1] + self.block]
 
     dir_l = self.direction == 'LEFT'
     dir_r = self.direction == 'RIGHT'
@@ -199,10 +199,11 @@ def get_state(self):
         (dir_l and self._is_collision(point_d))
     )
 
-    food_left = self.food[0] < head[0]
-    food_right = self.food[0] > head[0]
-    food_up = self.food[1] < head[1]
-    food_down = self.food[1] > head[1]
+    food_left = self.foodx < head[0]
+    food_right = self.foodx > head[0]
+    food_up = self.foody < head[1]
+    food_down = self.foody > head[1]
+
 
     state = [
         int(danger_straight),
