@@ -35,6 +35,9 @@ class SnakeEnv:
 
         self.done = False
         self.score = 0
+        
+        self.direction = 'RIGHT'
+
 
     def step(self, action): #avanzamento del gioco
         if action == 0:
