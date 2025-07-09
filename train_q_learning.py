@@ -60,7 +60,6 @@ for episode in range(episodes):
         print(f"episodio {episode + 1}, punteggio: {env.score}, epsilon: {epsilon:.3f}")
     scores.append(env.score)
 
-total_reward += reward
 
 print("allenamento completato!")
 
