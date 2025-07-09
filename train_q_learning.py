@@ -76,6 +76,7 @@ plt.xlabel('Episodio')
 plt.ylabel('Punteggio')
 plt.title('Punteggio durante l\'allenamento')
 plt.legend()
+plt.show() 
 
 
 
