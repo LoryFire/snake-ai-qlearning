@@ -135,6 +135,7 @@ class SnakeEnv:
         ]
 
         return list(map(int, state))  # converti True False in 1 0
+    panino
 
 
     
