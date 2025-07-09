@@ -35,23 +35,27 @@ class SnakeEnv:
 
         self.done = False
         self.score = 0
-        
+
         self.direction = 'RIGHT'
 
 
     def step(self, action): #avanzamento del gioco
-        if action == 0:
+        if action == 0:  # SINISTRA
             self.x_change = -self.block
             self.y_change = 0
-        elif action == 1:
+            self.direction = 'LEFT'
+        elif action == 1:  # DESTRA
             self.x_change = self.block
             self.y_change = 0
-        elif action == 2:
+            self.direction = 'RIGHT'
+        elif action == 2:  # SU
             self.x_change = 0
             self.y_change = -self.block
-        elif action == 3:
+            self.direction = 'UP'
+        elif action == 3:  # GIÙ
             self.x_change = 0
             self.y_change = self.block
+            self.direction = 'DOWN'
 
         self.x += self.x_change
         self.y += self.y_change
