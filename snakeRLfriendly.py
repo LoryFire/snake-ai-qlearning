@@ -84,6 +84,15 @@ class SnakeEnv:
         pygame.display.update()
         self.clock.tick(self.speed)
 
+#AGGIUNTA metodo per verificare le collisioni
+
+    def _is_collision(self, point):
+        x, y = point
+        if x < 0 or x >= self.width or y < 0 or y >= self.height:
+            return True
+        if point in self.snake[1:]:
+            return True
+        return False
 
     '''
         def get_state(self):
