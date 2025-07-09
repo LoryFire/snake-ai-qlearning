@@ -1,5 +1,6 @@
 import pygame
 import random
+import numpy as np
 
 class SnakeEnv:
     def __init__(self): #costruttore
@@ -83,7 +84,6 @@ class SnakeEnv:
         pygame.display.update()
         self.clock.tick(self.speed)
 
-#AGGIORNAMENTO DELLO STATO: non più posizione della testa e del cibo
 
     '''
         def get_state(self):
@@ -92,50 +92,117 @@ class SnakeEnv:
             dy = self.foody - head[1]
             return [head[0], head[1], dx, dy]
     '''
-    
-    def get_state(self): # restituisce lo stato con 0 e 1: pericolo, direzione, posizione cibo
-        head = self.snake[-1]
-        x_change = self.x_change
-        y_change = self.y_change
-        block = self.block
+#AGGIORNAMENTO DELLO STATO: non più posizione della testa e del cibo
 
-        # punti in ogni direzione
-        point_l = [head[0] - block, head[1]]
-        point_r = [head[0] + block, head[1]]
-        point_u = [head[0], head[1] - block]
-        point_d = [head[0], head[1] + block]
+'''def get_state(self):
+    head = self.snake[0]
+    point_l = [head[0] - self.block_size, head[1]]
+    point_r = [head[0] + self.block_size, head[1]]
+    point_u = [head[0], head[1] - self.block_size]
+    point_d = [head[0], head[1] + self.block_size]
 
-        # posizione corrente
-        dir_l = x_change == -block
-        dir_r = x_change == block
-        dir_u = y_change == -block
-        dir_d = y_change == block
+    dir_l = self.direction == 'LEFT'
+    dir_r = self.direction == 'RIGHT'
+    dir_u = self.direction == 'UP'
+    dir_d = self.direction == 'DOWN'
 
-        def danger(point):
-            return (
-                point[0] >= self.width or point[0] < 0 or
-                point[1] >= self.height or point[1] < 0 or
-                point in self.snake
-            )
+    danger_straight = (
+        (dir_r and self._is_collision(point_r)) or
+        (dir_l and self._is_collision(point_l)) or
+        (dir_u and self._is_collision(point_u)) or
+        (dir_d and self._is_collision(point_d))
+    )
 
-        state = [
-            # pericolo
-            danger([head[0] + x_change, head[1] + y_change]),
-            danger([head[0] + y_change, head[1] - x_change]),  # destra
-            danger([head[0] - y_change, head[1] + x_change]),  # sinistra
+    danger_right = (
+        (dir_u and self._is_collision(point_r)) or
+        (dir_d and self._is_collision(point_l)) or
+        (dir_l and self._is_collision(point_u)) or
+        (dir_r and self._is_collision(point_d))
+    )
 
-            # direzioni
-            dir_l, dir_r, dir_u, dir_d,
+    danger_left = (
+        (dir_d and self._is_collision(point_r)) or
+        (dir_u and self._is_collision(point_l)) or
+        (dir_r and self._is_collision(point_u)) or
+        (dir_l and self._is_collision(point_d))
+    )
 
-            # posizione del cibo
-            self.foodx < head[0],  # sinistra
-            self.foodx > head[0],  # destra
-            self.foody < head[1],  # sopra
-            self.foody > head[1],  # sotto
-        ]
+    food_left = self.food[0] < head[0]
+    food_right = self.food[0] > head[0]
+    food_up = self.food[1] < head[1]
+    food_down = self.food[1] > head[1]
 
-        return list(map(int, state))  # converti True False in 1 0
-    panino
+    state = [
+        int(danger_straight),
+        int(danger_right),
+        int(danger_left),
+        int(dir_l),
+        int(dir_r),
+        int(dir_u),
+        int(dir_d),
+        int(food_left),
+        int(food_right),
+        int(food_up),
+        int(food_down)
+    ]
+
+    return np.array(state, dtype=int)'''
+
+#AGGIORNAMENTO DELLO STATO: restituisce 11 vettori e non coordinate
+
+def get_state(self):
+    head = self.snake[0]
+    point_l = [head[0] - self.block_size, head[1]]
+    point_r = [head[0] + self.block_size, head[1]]
+    point_u = [head[0], head[1] - self.block_size]
+    point_d = [head[0], head[1] + self.block_size]
+
+    dir_l = self.direction == 'LEFT'
+    dir_r = self.direction == 'RIGHT'
+    dir_u = self.direction == 'UP'
+    dir_d = self.direction == 'DOWN'
+
+    danger_straight = (
+        (dir_r and self._is_collision(point_r)) or
+        (dir_l and self._is_collision(point_l)) or
+        (dir_u and self._is_collision(point_u)) or
+        (dir_d and self._is_collision(point_d))
+    )
+
+    danger_right = (
+        (dir_u and self._is_collision(point_r)) or
+        (dir_d and self._is_collision(point_l)) or
+        (dir_l and self._is_collision(point_u)) or
+        (dir_r and self._is_collision(point_d))
+    )
+
+    danger_left = (
+        (dir_d and self._is_collision(point_r)) or
+        (dir_u and self._is_collision(point_l)) or
+        (dir_r and self._is_collision(point_u)) or
+        (dir_l and self._is_collision(point_d))
+    )
+
+    food_left = self.food[0] < head[0]
+    food_right = self.food[0] > head[0]
+    food_up = self.food[1] < head[1]
+    food_down = self.food[1] > head[1]
+
+    state = [
+        int(danger_straight),
+        int(danger_right),
+        int(danger_left),
+        int(dir_l),
+        int(dir_r),
+        int(dir_u),
+        int(dir_d),
+        int(food_left),
+        int(food_right),
+        int(food_up),
+        int(food_down)
+    ]
+
+    return np.array(state, dtype=int)
 
 
     
