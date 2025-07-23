@@ -2,7 +2,7 @@ import pygame
 import random
 
 class SnakeEnv:
-    def __init__(self): #costruttore
+    def __init__(self, render_mode=False): #costruttore
         pygame.init()
         self.width = 800
         self.height = 600
@@ -15,9 +15,14 @@ class SnakeEnv:
         self.green = (0, 255, 0)
         self.blue = (50, 153, 213)
 
-        self.display = pygame.display.set_mode((self.width, self.height))
-        pygame.display.set_caption("Snake AI")
-        self.clock = pygame.time.Clock()
+        self.render_mode = render_mode
+        if self.render_mode:
+            self.display = pygame.display.set_mode((self.width, self.height))
+            pygame.display.set_caption("Snake AI")
+            self.clock = pygame.time.Clock()
+        else:
+            self.display = None
+            self.clock = None
 
         self.reset()
 
@@ -76,6 +81,8 @@ class SnakeEnv:
         return reward
 
     def render(self): #aggiorno graficamente il gioco
+        if not self.render_mode:
+            return
         self.display.fill(self.blue)
         pygame.draw.rect(self.display, self.green, [self.foodx, self.foody, self.block, self.block])
         for part in self.snake:

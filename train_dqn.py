@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from snakeRLfriendly import SnakeEnv
 from dqn_agent import DQNAgent
 
-env = SnakeEnv()
+env = SnakeEnv(render_mode=False) #render_mode=False grafica disabilitata
 state_size = len(env.get_state())
 action_size = 4
 agent = DQNAgent(state_size, action_size)
